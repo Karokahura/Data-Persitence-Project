@@ -11,12 +11,7 @@ public class MenuUIHandler : MonoBehaviour
     public TextMeshProUGUI bestScoreText;
     private void Start()
     {
-        //Reset values
-        //DataManager.Instance.playerScore = 0;
-        //DataManager.Instance.playerName = "";
-        //DataManager.Instance.newPlayerName = "";
-        //DataManager.Instance.SaveDataToJson();
-
+        
         if (DataManager.Instance != null)
         {
             playerNameText.text = DataManager.Instance.newPlayerName;
@@ -31,6 +26,16 @@ public class MenuUIHandler : MonoBehaviour
         #else
             Application.Quit();
         #endif
+    }
+
+    public void ResetGame() 
+    {
+        //Reset values
+        DataManager.Instance.playerScore = 0;
+        DataManager.Instance.playerName = "";
+        DataManager.Instance.newPlayerName = "";
+        DataManager.Instance.SaveDataToJson();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void StartGame()
