@@ -12,6 +12,7 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
+    public UIMainScene UIMainScene;
     
     private bool m_Started = false;
     private int m_Points;
@@ -36,6 +37,8 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        UIMainScene = GameObject.Find("Canvas").GetComponent<UIMainScene>();
     }
 
     private void Update()
@@ -70,6 +73,14 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
+        Debug.Log("le score: "+m_Points + " Le Bestscore : "+ DataManager.Instance.playerScore + " Le newplayer : "+ DataManager.Instance.newPlayerName);
+        if(m_Points > DataManager.Instance.playerScore)
+        {
+            DataManager.Instance.playerScore = m_Points;
+            DataManager.Instance.playerName = DataManager.Instance.newPlayerName;
+            DataManager.Instance.SaveDataToJson();
+            UIMainScene.SetBestScoreValues(DataManager.Instance.newPlayerName, DataManager.Instance.playerScore);
+        }
         m_GameOver = true;
         GameOverText.SetActive(true);
     }
